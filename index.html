@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador</title>
+</head>
+<body hx-ext="client-side-templates">
+
+    <div class="container-all">
+        <form>
+            <input type="text" name="query" placeholder="Escribe tu búsqueda..." 
+                   hx-post="http://localhost:3000" 
+                   hx-target="#target" 
+                   mustache-template="target-container" 
+                   hx-swap="innerHTML">
+        </form>
+
+        <button hx-get="http://localhost:3000" 
+                hx-target="#target" 
+                hx-trigger="click" 
+                mustache-template="target-container" 
+                hx-swap="innerHTML">Cargar información...</button>
+
+        <div id="target"></div>
+
+        <template id="target-container">
+            {{#hits}}
+                <li>
+                    <a href="{{ url }}" target="_blank">{{ title }}</a>
+                </li>
+            {{/hits}}
+        </template>
+    </div>
+
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
+</body>
+</html>
